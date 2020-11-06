@@ -1,0 +1,20 @@
+{
+  "name": "gitapp",
+  "version": "1.0.0",
+  "description": "Allows users to see top n repos from an organization and top m users from each repo",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.1",
+    "nodemon": "^2.0.6"
+  }
+}
