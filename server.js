@@ -4,10 +4,9 @@ const app = express();
 const cors = require('cors');
 const axios = require('axios');
 const token = require('./token.js');
-const repo = require('./repos.js');
+const repos = require('./repos.js');
 const commits = require('./commits.js');
 const hbs = require('hbs');
-const { default: Axios } = require('axios');
 
 const client_id = process.env.CLIENT_ID;
 const client_secret = process.env.CLIENT_SECRET;
@@ -36,7 +35,12 @@ app.get('/form', (req, res) => {
 let numOfUsers, org;
 
 app.post('/getRepoData', async(req, res) => {
-    const data = await repo.getRepoData(access_token, req.body.org, req.body.numOfRepos);
+    const data = await repos.getRepoData(access_token, req.body.org, req.body.numOfRepos);
+    if(data==-1) {
+        res.send("Organization not found or Internal Error");
+        res.end();
+        return;
+    }
     numOfUsers = req.body.numOfUsers;
     org = req.body.org;
     let context ={};
