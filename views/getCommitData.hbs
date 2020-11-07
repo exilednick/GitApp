@@ -1,3 +1,6 @@
+<head>
+  <link rel="stylesheet" type="text/css" href="css/data.css">
+</head>
 <h1>Top {{this.numOfUsers}} user contributions in {{this.repo}}</h1>
 <table class="table">
     <thead>
@@ -10,7 +13,7 @@
         {{#each data}}
         <tr>
             <td scope="col">{{@key}}</td>
-            <td scope="col">{{this}}</td>
+            <td scope="col" id="commit">{{this}}</td>
         </tr>
         {{/each}}
     </tbody>

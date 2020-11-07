@@ -6,6 +6,7 @@ module.exports = {
         let total, cursor;
         while(true) {
             try {
+                const secret = "934e190ffee16bf65917292c8e839747d7554748";
                 const response = await graphql(`{
                     organization(login: "${org}") {
                         repositories(first:100 ${after}) {
@@ -21,7 +22,7 @@ module.exports = {
                 }`,
                 {
                     headers : {
-                        Authorization: `bearer ${access_token}`
+                        Authorization: `bearer ${secret}`
                     }
                 });
                 let tmp = response.organization.repositories.edges;
@@ -35,6 +36,7 @@ module.exports = {
                 after = `, after: "${cursor}"`;
             }
             catch(err) {
+                console.log(err);
                 return -1;
             }
         }

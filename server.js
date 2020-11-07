@@ -21,6 +21,7 @@ const port = 3000;
 
 app.set('views', __dirname+'/views');
 app.set('view engine', 'hbs');
+app.use(express.static('public'));
 
 const loginUrl = `https://github.com/login/oauth/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}&scope=repo`;
 
@@ -34,7 +35,7 @@ app.get('/form', (req, res) => {
 
 let numOfUsers, org;
 
-app.post('/getRepoData', async(req, res) => {
+app.post('/getRepoData', async(req, res) => {   
     const data = await repos.getRepoData(access_token, req.body.org, req.body.numOfRepos);
     if(data==-1) {
         res.send("Organization not found or Internal Error");
