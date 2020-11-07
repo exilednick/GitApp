@@ -1,0 +1,17 @@
+<h1>Top {{this.numOfUsers}} user contributions in {{this.repo}}</h1>
+<table class="table">
+    <thead>
+    <tr>
+      <th scope="col">Username</th>
+      <th scope="col">Commits</th>
+    </tr>
+  </thead>
+    <tbody>
+        {{#each data}}
+        <tr>
+            <td scope="col">{{@key}}</td>
+            <td scope="col">{{this}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>

@@ -2,8 +2,12 @@ const express = require('express');
 require('dotenv').config();
 const app = express();
 const cors = require('cors');
+const axios = require('axios');
 const token = require('./token.js');
 const repo = require('./repos.js');
+const commits = require('./commits.js');
+const hbs = require('hbs');
+const { default: Axios } = require('axios');
 
 const client_id = process.env.CLIENT_ID;
 const client_secret = process.env.CLIENT_SECRET;
@@ -16,7 +20,10 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}))
 const port = 3000;
 
-const loginUrl = `https://github.com/login/oauth/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}`;
+app.set('views', __dirname+'/views');
+app.set('view engine', 'hbs');
+
+const loginUrl = `https://github.com/login/oauth/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}&scope=repo`;
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + "/index.html");
@@ -26,9 +33,27 @@ app.get('/form', (req, res) => {
     res.sendFile(__dirname + "/form.html");
 })
 
-app.post('/getData', async(req, res) => {
+let numOfUsers, org;
+
+app.post('/getRepoData', async(req, res) => {
     const data = await repo.getRepoData(access_token, req.body.org, req.body.numOfRepos);
-    res.json(data);
+    numOfUsers = req.body.numOfUsers;
+    org = req.body.org;
+    let context ={};
+    context['data'] = data;
+    context['reqBody'] = req.body; 
+    res.render('getRepoData', context);
+});
+
+app.get('/getCommitData', async(req, res) => {
+    const params = new URLSearchParams(req.query);
+    const result = await commits.getCommitData(access_token, org, params.get('repo'), numOfUsers);
+    const context = {
+        'repo' : params.get('repo'),
+        'numOfUsers' : numOfUsers,
+        'data' : result 
+    }
+    res.render('getCommitData', context);
 });
 
 app.get('/login/github', (req, res) => {

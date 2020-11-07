@@ -1,0 +1,21 @@
+<h1>Top {{this.reqBody.numOfRepos}} repos by {{this.reqBody.org}}</h1>
+<table class="table">
+    <thead>
+    <tr>
+      <th scope="col">Repository</th>
+      <th scope="col">Fork Count</th>
+    </tr>
+  </thead>
+    <tbody>
+        {{#each data}}
+        <tr>
+            <td scope="col">
+                <a href="/getCommitData?repo={{@key}}">
+                {{@key}}</td>
+                </a>
+            </td>
+            <td scope="col">{{this}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>

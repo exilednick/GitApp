@@ -4,15 +4,15 @@ module.exports = {
         let i = 1;
         let forkCount = {};
         while(true) {
-            const response = await axios(`https://api.github.com/orgs/${org}/repos?per_page=100&page=${i}`, {
+            const response = await axios(`https://api.github.com/orgs/${org}/repos?per_page=100&page=${i}&sort=forks`, {
                 headers: {
                     Authorization: `bearer ${access_token}`
                 }
             });
             if (response.data.length === 0)
                 break;
-            for(let j in await response.data) {
-                forkCount[await response.data[j]['name']] = await response.data[j]['forks_count'];
+            for(let j in response.data) {
+                forkCount[response.data[j]['name']] = response.data[j]['forks_count'];
             }
             i++;
         }
