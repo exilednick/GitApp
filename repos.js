@@ -6,7 +6,7 @@ module.exports = {
         let total, cursor;
         while(true) {
             try {
-                const secret = "934e190ffee16bf65917292c8e839747d7554748";
+                const secret = "Use secret from personal access token";
                 const response = await graphql(`{
                     organization(login: "${org}") {
                         repositories(first:100 ${after}) {
